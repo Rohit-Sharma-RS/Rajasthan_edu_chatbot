@@ -297,11 +297,11 @@ def query_chatbot():
     if not user_input:
         return jsonify({'error': 'Input is required'}), 400
     
-    # Handle quitting (optional)
+
     if user_input.lower() == 'quit':
         return jsonify({'message': 'Thank you for using the chatbot. Goodbye!'}), 200
     
-    response = process_query(user_input)  # Reuse your existing function
+    response = process_query(user_input) 
     return jsonify({'response': response})
 
 
