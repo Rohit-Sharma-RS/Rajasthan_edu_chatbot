@@ -5,7 +5,13 @@ import re
 from thefuzz import fuzz, process
 import os
 from dotenv import load_dotenv
+from flask import Flask, request, jsonify
+import json
+from flask_cors import CORS
 
+
+app = Flask(__name__)
+CORS(app)
 load_dotenv('api.env')
 def load_data(file_path='data.json'):
     try:
@@ -172,6 +178,8 @@ Top Recruiters: {', '.join(info['placements.top_recruiters'])}
 Facilities: {', '.join(info['facilities'])}
             """
     return f"College '{college_name}' not found."
+
+
 def handle_general_questions(user_input):
     try:
         ai_prompt = f"""
@@ -271,5 +279,31 @@ def run_chatbot():
         response = process_query(user_input)
         print(f"\nChatbot: {response}")
 
+
+@app.route('/init', methods=['GET'])
+def init_chatbot():
+    """Initialize the chatbot and provide available queries."""
+    welcome_message = (
+        f"You can ask about college eligibility based on these exams: {', '.join(unique_exams)}. "
+        "You can also ask about college fees, placements, and general information."
+    )
+    return jsonify({'message': welcome_message})
+
+@app.route('/query', methods=['POST'])
+def query_chatbot():
+    """Process user input and return chatbot response."""
+    user_input = request.json.get('input', '')
+    
+    if not user_input:
+        return jsonify({'error': 'Input is required'}), 400
+    
+    # Handle quitting (optional)
+    if user_input.lower() == 'quit':
+        return jsonify({'message': 'Thank you for using the chatbot. Goodbye!'}), 200
+    
+    response = process_query(user_input)  # Reuse your existing function
+    return jsonify({'response': response})
+
+
 if __name__ == "__main__":
-    run_chatbot()
+    app.run(debug=True)
