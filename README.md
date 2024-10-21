@@ -20,6 +20,7 @@ This project is a chatbot designed to assist users in obtaining information abou
 - **TheFuzz**: For fuzzy matching to handle college name queries.
 - **CORS**: For enabling cross-origin requests.
 
+## Setup Instructions
 
 ### Prerequisites
 
@@ -33,7 +34,7 @@ This project is a chatbot designed to assist users in obtaining information abou
 
 ### Installation
 - Clone the repository:
-
-   ```bash
+```bash
    git clone https://github.com/Rohit-Sharma-RS/Rajasthan_edu_chatbot.git
    cd Rajasthan_edu_chatbot
+   ```
