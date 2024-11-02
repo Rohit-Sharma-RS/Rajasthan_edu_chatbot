@@ -304,6 +304,9 @@ def query_chatbot():
     response = process_query(user_input) 
     return jsonify({'response': response})
 
+@app.route('/')
+def home():
+    return "Welcome to the Rajasthan Education Chatbot! Use /init to start."
 
 if __name__ == "__main__":
     app.run(debug=True)
